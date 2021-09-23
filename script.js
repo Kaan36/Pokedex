@@ -2,21 +2,27 @@ let pokemonElements = [{ 'normal': 'normal', 'fighting': 'fighting', 'flying': '
 let currentPokemon = [];
 let pokemonStatsBase;
 let pokemonStatsName;
-let xdata = [1, 2, 3, 10];
-let ydata = ["fire", "water", "push", "atom"];
+let xdata = [[1, 2, 3, 10]];
+let ydata = [["fire", "water", "push", "atom"]];
 let pokemonType;
 let loadedPokemons;
-let pokemonSlot;
-
+let xdataValue = [];
+let ydataValue = [];
+let xValue;
+let yValue;
+let valuex;
+let valuey;
+let counter = 141;
 
 async function loadPokemons() {
     //mainDataPokemons['id'].forEach(loadedPokemons);
-    for (let i = 1; i < 21; i++) {
+    for (let i = 1; i < counter; i++) {
         loadedPokemons = i;
         renderPokemonCards(i);
         loadPokemon(loadedPokemons, i);
-      
+
     }
+
 };
 
 async function loadPokemon(loadedPokemons, i) {
@@ -27,8 +33,8 @@ async function loadPokemon(loadedPokemons, i) {
     console.log('Loaded pokemon', currentPokemon);
 
     renderPokemonInfo(currentPokemon, i);
-    //loadStats();
-    loadCharts(loadedPokemons, i);
+
+
 };
 
 async function renderPokemonInfo(currentPokemon, i) {
@@ -54,39 +60,87 @@ async function renderPokemonInfo(currentPokemon, i) {
 
 };
 
-async function loadCharts(loadedPokemons, i) {
+async function renderPokemonTypes(currentPokemon, i) {
 
+    await loadPokemon;
+    // pokemonType2 = currentPokemon['types'][1]['type']['name'];
+
+    // for (let j = 0; j < currentPokemon['types'].length; j++) {
+    pokemonType1 = currentPokemon['types'][0]['type']['name'];
+
+
+    if (pokemonType1 == pokemonElements[0][pokemonType1]) {
+        document.getElementById('type-' + i).parentNode.classList.add(pokemonType1);
+        document.getElementById('pokemonCard' + i).classList.add(pokemonType1);
+        document.getElementById('type-' + i).innerHTML = pokemonType1;
+    }
+
+    if (currentPokemon['types'].length > 1) {
+        pokemonType2 = currentPokemon['types'][1]['type']['name'];
+        document.getElementById('type-x' + i).parentNode.classList.add(pokemonType2);
+        document.getElementById('type-x' + i).innerHTML = pokemonType2;
+    } else {
+        document.getElementById('type-x' + i).innerHTML = "u.a.";
+        document.getElementById('type-x' + i).parentNode.classList.add(pokemonType1);
+        document.getElementById('type-x' + i).innerHTML = pokemonType1;
+
+    }
+
+    //};
+    loadStats(currentPokemon, i);
+};
+
+async function loadStats(currentPokemon, i) {
+    await loadPokemon;
+
+    for (let j = 0; j < currentPokemon['stats'].length; j++) {
+        xValue = currentPokemon['stats'][j]['base_stat'];
+        yValue = currentPokemon['stats'][j]['stat']['name'];
+        console.log('loadStats counter:', currentPokemon);
+        xdataValue.push(xValue);
+        ydataValue.push(yValue);
+        console.log('xdataValue:', xdataValue)
+    }
+    console.log('xdata:', xdata)
+    valuex = xdataValue.splice(0, 6);
+    valuey = ydataValue.splice(0, 6);
+    xdata.push(valuex);
+    ydata.push(valuey);
+
+    loadCharts(i);
+};
+
+async function loadCharts(i) {
+    await loadStats;
     //setup
-
     const data = {
 
-        labels: ydata,
+        labels: ydata[i],
         datasets: [{
             label: 'stats',
-            data: xdata,
+            data: xdata[i],
             backgroundColor: [
                 'rgba(255, 255, 255, 0.6)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(255, 99, 132, 1)',
+                'rgba(211, 0, 0, 0.6)',
+                'rgba(0, 17, 211, 0.6)',
+                'rgba(211, 179, 0, 0.6)',
+                'rgba(0, 211, 183, 0.6)',
+                'rgba(35, 183, 5, 0.6)',
+                'rgba(255, 99, 132, 0.6)',
             ],
             borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+                'rgba(0, 0, 0, 0.2)',
+                'rgba(211, 0, 0, 0.6)',
+                'rgba(0, 17, 211, 0.6)',
+                'rgba(211, 179, 0, 0.6)',
+                'rgba(0, 211, 183, 0.6)',
+                'rgba(35, 183, 5, 0.6)'
             ],
             borderWidth: 1
         }]
     };
 
     // config
-
     const config = {
         type: 'radar',
         data,
@@ -108,7 +162,7 @@ async function loadCharts(loadedPokemons, i) {
                 r: {
                     display: false,
                     backgroundColor: 'rgba(140, 140, 140)',
-                    max: 100,
+                    max: 110,
                     min: 0,
                     ticks: {
                         stepSize: 100,
@@ -132,40 +186,24 @@ async function loadCharts(loadedPokemons, i) {
     };
 
     // render init block
-    
-        const myChart = new Chart(
-            document.getElementById('myChart' + i),
-            config 
-            );
+    const myChart = new Chart(
+        document.getElementById('myChart' + i),
+        config
+    );
 
 };
 
 
-async function renderPokemonTypes(currentPokemon, i) {
 
-    await loadPokemon;
-    // pokemonType2 = currentPokemon['types'][1]['type']['name'];
-
-    for (let j = 0; j < 1; j++) {
-        pokemonType = currentPokemon['types'][j]['type']['name'];
-
-        if (pokemonType == pokemonElements[0][pokemonType]) {
-            document.getElementById('type-' + i).parentNode.classList.add(pokemonType);
-            document.getElementById('pokemonCard' + i).classList.add(pokemonType);
-            document.getElementById('type-' + i).innerHTML = pokemonType;
-        }
-    };
-
-};
 
 function renderPokemonCards(i) {
 
     document.getElementById('pokemonCards').innerHTML += `
-        <div id="pokemonCard${i}" class="card margin" style="width: 18rem;">
+        <div id="pokemonCard${i}" class="card card-style" style="width: 18rem;">
         <span id="pokemonID${i}"></span>
-        <img id="pokemonIcon${i}" src="" class="card-img-top border-radius">
+        <img id="pokemonIcon${i}" src="" class="card-img-top img-style">
 
-        <div class="card-body padding-bottom">
+        <div class="card-body card-body-style">
             <div class="center">
                 <h5 class="card-title" id="pokemonName${i}">Card title</h5>
             </div>
@@ -176,22 +214,22 @@ function renderPokemonCards(i) {
                     </div>
                 </div>
 
-                <div class="card style-types-box bg-success">
-                    <div id="type-${i}" class="card-body style-types">
-                        u.a.
+                <div class="card style-types-box bg-secondary ">
+                    <div id="type-x${i}" class="card-body style-types">
+                        
                     </div>
                 </div>
             </div>
 
             <div class="information">
-                <div class="card-body column">
+                <div class="card-body information-box">
                     <span id="weight${i}"></span>
                     Weight
                 </div>
 
 
 
-                <div class="card-body column">
+                <div class="card-body information-box">
                     <span id="height${i}"></span>
                     Height
                 </div>
