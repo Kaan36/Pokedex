@@ -12,7 +12,7 @@ let xValue;
 let yValue;
 let valuex;
 let valuey;
-let counter = 141;
+let counter = 21;
 
 async function loadPokemons() {
     //mainDataPokemons['id'].forEach(loadedPokemons);
@@ -20,7 +20,6 @@ async function loadPokemons() {
         loadedPokemons = i;
         renderPokemonCards(i);
         loadPokemon(loadedPokemons, i);
-
     }
 
 };
@@ -53,7 +52,11 @@ async function renderPokemonInfo(currentPokemon, i) {
     document.getElementById('weight' + i).innerHTML = pokemonWeight + ' lbs';
 
     let pokemonID = currentPokemon['id'];
-    document.getElementById('pokemonID' + i).innerHTML = '#' + pokemonID;
+    document.getElementById('pokemonID' + i).innerHTML = '#' + pokemonID + `
+    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showPokemonModal(${i})">
+  view
+</button>
+    `;
 
     renderPokemonTypes(currentPokemon, i);
 
@@ -121,12 +124,12 @@ async function loadCharts(i) {
             data: xdata[i],
             backgroundColor: [
                 'rgba(255, 255, 255, 0.6)',
-                'rgba(211, 0, 0, 0.6)',
-                'rgba(0, 17, 211, 0.6)',
-                'rgba(211, 179, 0, 0.6)',
-                'rgba(0, 211, 183, 0.6)',
-                'rgba(35, 183, 5, 0.6)',
-                'rgba(255, 99, 132, 0.6)',
+                'rgba(211, 0, 0, 0.2)',
+                'rgba(0, 17, 211, 0.2)',
+                'rgba(211, 179, 0, 0.2)',
+                'rgba(0, 211, 183, 0.2)',
+                'rgba(35, 183, 5, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
             ],
             borderColor: [
                 'rgba(0, 0, 0, 0.2)',
@@ -199,11 +202,11 @@ async function loadCharts(i) {
 function renderPokemonCards(i) {
 
     document.getElementById('pokemonCards').innerHTML += `
-        <div id="pokemonCard${i}" class="card card-style" style="width: 18rem;">
-        <span id="pokemonID${i}"></span>
+        <div id="pokemonCard${i}" class="card card-style" style="width: 18rem;" onclick="toggleCardBody(${i})">
+        <div class="pokemonID" id="pokemonID${i}"></div>
         <img id="pokemonIcon${i}" src="" class="card-img-top img-style">
 
-        <div class="card-body card-body-style">
+        <div id="card-body${i}" class="card-body card-body-style">
             <div class="center">
                 <h5 class="card-title" id="pokemonName${i}">Card title</h5>
             </div>
@@ -238,11 +241,53 @@ function renderPokemonCards(i) {
             <div class="chartBox">     
              <canvas id="myChart${i}"></canvas>
             </div>
-            
-          
+        </div>
         </div>
 
-        </div>
+        <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header black">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body modal-style">
+      <video autoplay muted loop id="myVideo">
+  <source src="videos/pokeball.mp4" type="video/mp4">
+</video>
+<img id="pokemonIconModal" src="">
+       
+      </div>
+     
+    </div>
+  </div>
+</div>
+
         `;
 
 };
+
+function toggleCardBody(i) {
+    var x = document.getElementById("card-body" + i);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+};
+
+async function showPokemonModal(i){
+    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+    let response =  await fetch(url);
+    currentPokemon = await response.json();
+    let pokemonIcon = currentPokemon['sprites']['other']['official-artwork']['front_default'];
+    document.getElementById('pokemonIconModal').src = pokemonIcon;
+}
+
+//function onScroll() {
+//    if(scrollY > 200){
+//        counter += 20;
+//    }
+//    loadPokemons();
+//}

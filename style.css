@@ -1,15 +1,18 @@
 body {
-    margin: 0;
-    margin-top: 2rem;
-    display: flex;
-    flex-wrap: wrap;
+    margin: 1rem;
     color: white !important;
+}
+
+.pokemonID{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .img-style {
     border-radius: 24px !important;
-    height: 150px !important;
-    width: 90%;
+    height: 200px !important;
 }
 
 .types {
@@ -27,7 +30,6 @@ body {
 
 .style-types-box {
     border-radius: 12px !important;
-
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);
 }
 
@@ -51,7 +53,7 @@ body {
 
 .card-body-style {
     padding: 0 !important;
-    display:none;
+    display: none;
 }
 
 
@@ -66,12 +68,14 @@ body {
     position: relative;
     box-shadow: 12px 12px 20px 1px rgba(0, 0, 0, 0.8);
     transition: all 250ms ease;
+    cursor: pointer;
 }
 
 .card-style:hover{
     transform: translate( 0rem, -1rem);
-    width: 22rem !important;
 }
+
+
 
 .normal {
     background-color: rgb(179, 155, 136) !important;
@@ -155,6 +159,40 @@ body {
 #pokemonCards {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
 }
 
+.modal-style {
+background-color: black;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+overflow: hidden !important;
+}
+
+#myVideo {
+    position: relative !important;
+  }
+
+  #pokemonIconModal{
+      position: absolute;
+      bottom: 0;
+      z-index: 10;
+      height: 50vh;
+      transition: all 225ms ease-in-out;
+      border-radius: 50%;
+  }
+  #pokemonIconModal:hover{
+      height: 80vh;
+      box-shadow: 3px 3px 400px 0px rgba(0, 0, 0, 0.6);
+  }
+ 
+
+  .black {
+      height: 12px !important;
+      background-color: transparent!important;
+      color: white !important;
+  }
+
+  .chartBox {
+      width: 100%;
+  }
