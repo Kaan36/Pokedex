@@ -6,26 +6,30 @@ body {
 .pokemonID{
     display: flex;
     justify-content: space-around;
-    width: 100%;
-    margin-bottom: 1rem;
+    width: 101%;
+    border-radius: 24px 24px 0px 0px;
+    padding: 12px;
+    margin: -1px;
 }
 
 .img-style {
-    border-radius: 24px !important;
+    border-radius: 0px 0px 24px 24px !important;
     height: 200px !important;
+    width: 101% !important;
 }
 
 .types {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .style-types {
-    padding-top: 3px !important;
-    padding-bottom: 3px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
     font-size: 12px !important;
-    padding-left: 42px !important;
-    padding-right: 42px !important;
+    padding-left: 36px !important;
+    padding-right: 36px !important;
 }
 
 .style-types-box {
@@ -56,11 +60,8 @@ body {
     display: none;
 }
 
-
-
 .card-style {
     margin: 12px !important;
-    padding-top: 12px;
     border-radius: 24px !important;
     display: flex;
     justify-content: center;
@@ -74,8 +75,6 @@ body {
 .card-style:hover{
     transform: translate( 0rem, -1rem);
 }
-
-
 
 .normal {
     background-color: rgb(179, 155, 136) !important;
@@ -168,24 +167,30 @@ background-color: black;
  align-items: center;
 overflow: hidden !important;
 }
-
-#myVideo {
+.modal-body {
     position: relative !important;
-  }
+}
+
 
   #pokemonIconModal{
       position: absolute;
       bottom: 0;
+      left: 400px;
       z-index: 10;
       height: 50vh;
-      transition: all 225ms ease-in-out;
-      border-radius: 50%;
+      transition: all 1s ease-in-out;
   }
   #pokemonIconModal:hover{
       height: 80vh;
-      box-shadow: 3px 3px 400px 0px rgba(0, 0, 0, 0.6);
   }
  
+  #modal-box {
+      position: absolute;
+      top: 0;
+     font-size: 100px;
+     font-weight: bold;
+     
+  }
 
   .black {
       height: 12px !important;
@@ -193,6 +198,27 @@ overflow: hidden !important;
       color: white !important;
   }
 
-  .chartBox {
+  .progress {
+      margin-top: 12px;
+      margin-bottom: 12px;
+  }
+
+  .info-box{
+    position: absolute !important;
+    bottom: 0px;
+    right: 20px;
+    width: 400px !important;
+   height: 100% !important;
+   background-color: rgba(141, 72, 23, 0.2);
+  }
+
+  #info-header {
+      display: flex;
+      justify-content: center;
       width: 100%;
+    
+  }
+
+  .background {
+      background-color: rgb(54, 54, 54) !important;
   }

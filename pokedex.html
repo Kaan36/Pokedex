@@ -13,13 +13,45 @@
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script src="script.js"></script>
 </head>
 
-<body onload="loadPokemons()" onscroll="onScroll()">
+<body onload="loadPokemon()">
 
     <div id="pokemonCards"></div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header black">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title </h5>
+                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div id="modal-body" class="modal-body modal-style">
+                    <video autoplay muted loop id="myVideo">
+                        <source src="videos/pokeball.mp4" type="video/mp4">
+                    </video>
+
+                    <div id="modal-box">
+                    </div>
+                    <div id="info-box" >
+                        <h1 id="info-header"></h1>
+                        <div id="info-body"></div>
+                        <canvas id="myChart" style="width: 400px; height: 400px;"></canvas>
+                    </div>
+
+                    <img id="pokemonIconModal" src="">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
 
