@@ -13,13 +13,29 @@ let xValue;
 let yValue;
 let valuex;
 let valuey;
-let offset = 21;
+let limit = 21;
+let offset = 1;
+let scrollSet = 0;
+let setValue = 500;
 
+window.onscroll = function () { myFunction() };
+
+function myFunction() {
+    scrollSet = setValue;
+    if (limit < 121) {
+        if (scrollY > scrollSet) {
+            limit += 20;
+            offset += 20;
+            console.log('scrollY-limit:', limit)
+            loadPokemon();
+            setValue += 500;
+        }
+    }
+};
 
 async function loadPokemon() {
-
-    for (let i = 1; i < offset; i++) {
-        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+    for (let i = offset; i < limit; i++) {
+        let url = `https://pokeapi.co/api/v2/pokemon/${i}/?offset=${offset}&limit=${limit}`;
         let response = await fetch(url);
         currentPokemon = await response.json();
         allPokemons.push(currentPokemon);
@@ -30,10 +46,10 @@ async function loadPokemon() {
 async function renderPokemonInfo() {
     await loadPokemon;
 
-    for (let i = 0; i < allPokemons.length; i++) {
+    for (let i = offset; i < allPokemons.length; i++) {
         renderPokemonCards(i);
         let pokemonIcon = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
-        document.getElementById('pokemonIcon' + i).src = pokemonIcon;      
+        document.getElementById('pokemonIcon' + i).src = pokemonIcon;
 
         let pokemonName = allPokemons[i]['name'];
         document.getElementById('pokemonName' + i).innerHTML = pokemonName;
@@ -50,7 +66,7 @@ async function renderPokemonInfo() {
       view
     </button>
         `;
-       
+
         loadStats(i)
         renderPokemonTypes(i);
 
@@ -82,18 +98,18 @@ async function renderPokemonTypes(i) {
 async function loadStats(i) {
     await loadPokemon;
     for (let j = 0; j < allPokemons[i]['stats'].length; j++) {
-       
-        document.getElementById('hp' + i).style.width = allPokemons[i]['stats'][0]['base_stat'] + "%" ; 
-        document.getElementById('hp' + i).innerHTML = `${allPokemons[i]['stats'][0]['base_stat']}/100 `; 
-        document.getElementById('attack' + i).style.width = allPokemons[i]['stats'][1]['base_stat'] + "%" ; 
-        document.getElementById('attack' + i).innerHTML = `${allPokemons[i]['stats'][1]['base_stat']}/100 `; 
-        document.getElementById('defense' + i).style.width = allPokemons[i]['stats'][2]['base_stat'] + "%" ;
-        document.getElementById('defense' + i).innerHTML = `${allPokemons[i]['stats'][2]['base_stat']}/100 `; 
-        document.getElementById('speed' + i).style.width = allPokemons[i]['stats'][3]['base_stat'] + "%" ; 
-        document.getElementById('speed' + i).innerHTML = `${allPokemons[i]['stats'][3]['base_stat']}/100 `; 
-        document.getElementById('special-attack' + i).style.width = allPokemons[i]['stats'][4]['base_stat'] + "%" ; 
-        document.getElementById('special-attack' + i).innerHTML = `${allPokemons[i]['stats'][4]['base_stat']}/100 `; 
-             
+
+        document.getElementById('hp' + i).style.width = allPokemons[i]['stats'][0]['base_stat'] + "%";
+        document.getElementById('hp' + i).innerHTML = `${allPokemons[i]['stats'][0]['base_stat']}/100 `;
+        document.getElementById('attack' + i).style.width = allPokemons[i]['stats'][1]['base_stat'] + "%";
+        document.getElementById('attack' + i).innerHTML = `${allPokemons[i]['stats'][1]['base_stat']}/100 `;
+        document.getElementById('defense' + i).style.width = allPokemons[i]['stats'][2]['base_stat'] + "%";
+        document.getElementById('defense' + i).innerHTML = `${allPokemons[i]['stats'][2]['base_stat']}/100 `;
+        document.getElementById('speed' + i).style.width = allPokemons[i]['stats'][3]['base_stat'] + "%";
+        document.getElementById('speed' + i).innerHTML = `${allPokemons[i]['stats'][3]['base_stat']}/100 `;
+        document.getElementById('special-attack' + i).style.width = allPokemons[i]['stats'][4]['base_stat'] + "%";
+        document.getElementById('special-attack' + i).innerHTML = `${allPokemons[i]['stats'][4]['base_stat']}/100 `;
+
         xValue = allPokemons[i]['stats'][j]['base_stat'];
         yValue = allPokemons[i]['stats'][j]['stat']['name'];
         xdataValue.push(xValue);
@@ -171,15 +187,15 @@ function renderPokemonCards(i) {
 };
 
 function toggleCardBody(i) {
-    
-  
+
+
     var x = document.getElementById("card-body" + i);
     pokemonType1 = allPokemons[i]['types'][0]['type']['name'];
-    
+
     if (x.style.display === "none") {
         x.style.display = "block";
         document.getElementById('pokemonCard' + i).classList.add('background');
-       
+
         document.getElementById('pokemonID' + i).classList.add(pokemonType1);
         document.getElementById('pokemonIcon' + i).classList.add(pokemonType1);
 
@@ -195,7 +211,7 @@ async function showPokemonModal(i) {
     updateChart(i);
 
     let pokemonName = allPokemons[i]['name'];
-    document.getElementById('info-header').innerHTML += `${pokemonName}`;
+    document.getElementById('info-header').innerHTML = `${pokemonName}`;
 
     let pokemonIcon = allPokemons[i]['sprites']['other']['official-artwork']['front_default'];
     document.getElementById('pokemonIconModal').src = pokemonIcon;

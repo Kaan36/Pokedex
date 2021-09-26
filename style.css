@@ -3,7 +3,7 @@ body {
     color: white !important;
 }
 
-.pokemonID{
+.pokemonID {
     display: flex;
     justify-content: space-around;
     width: 101%;
@@ -14,7 +14,7 @@ body {
 
 .img-style {
     border-radius: 0px 0px 24px 24px !important;
-    height: 200px !important;
+    height: 150px !important;
     width: 101% !important;
 }
 
@@ -72,16 +72,16 @@ body {
     cursor: pointer;
 }
 
-.card-style:hover{
+.card-style:hover {
     transform: translate( 0rem, -1rem);
 }
 
 .normal {
-    background-color: rgb(179, 155, 136) !important;
+    background-color: #BAB0D5 !important;
 }
 
 .fighting {
-    background-color: rgb(201, 118, 50) !important;
+    background-color: #D6B591 !important;
 }
 
 .flying {
@@ -89,23 +89,23 @@ body {
 }
 
 .poison {
-    background-color: rgb(28, 88, 0) !important;
+    background-color: #7C538C !important;
 }
 
 .ground {
-    background-color: rgb(156, 166, 172) !important;
+    background-color: #B1736C !important;
 }
 
 .rock {
-    background-color: rgb(65, 65, 65) !important;
+    background-color: #A6AAB6 !important;
 }
 
 .bug {
-    background-color: rgb(91, 196, 99) !important;
+    background-color: #C3CE75 !important;
 }
 
 .ghost {
-    background-color: rgb(148, 106, 158) !important;
+    background-color: #735797 !important;
 }
 
 .steel {
@@ -113,27 +113,27 @@ body {
 }
 
 .fire {
-    background-color: rgb(219, 57, 57) !important;
+    background-color: #FB6C6C !important;
 }
 
 .water {
-    background-color: rgb(2, 49, 255) !important;
+    background-color: #609FB5 !important;
 }
 
 .grass {
-    background-color: rgb(34, 145, 0) !important;
+    background-color: #48D0B0 !important;
 }
 
 .electric {
-    background-color: rgb(255, 209, 4) !important;
+    background-color: #FFD86F !important;
 }
 
 .psychic {
-    background-color: rgb(113, 7, 199) !important;
+    background-color: #9B7FA6 !important;
 }
 
 .ice {
-    background-color: rgb(34, 189, 216) !important;
+    background-color: rgb(111, 189, 202) !important;
 }
 
 .dragon {
@@ -145,7 +145,7 @@ body {
 }
 
 .fairy {
-    background-color: rgb(57, 10, 83) !important;
+    background-color: #F469A9 !important;
 }
 
 #pokemonID {
@@ -161,64 +161,63 @@ body {
 }
 
 .modal-style {
-background-color: black;
- display: flex;
- justify-content: center;
- align-items: center;
-overflow: hidden !important;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden !important;
 }
+
 .modal-body {
     position: relative !important;
 }
 
+#pokemonIconModal {
+    position: absolute;
+    bottom: 0;
+    left: 400px;
+    z-index: 10;
+    height: 50vh;
+    transition: all 1s ease-in-out;
+}
 
-  #pokemonIconModal{
-      position: absolute;
-      bottom: 0;
-      left: 400px;
-      z-index: 10;
-      height: 50vh;
-      transition: all 1s ease-in-out;
-  }
-  #pokemonIconModal:hover{
-      height: 80vh;
-  }
- 
-  #modal-box {
-      position: absolute;
-      top: 0;
-     font-size: 100px;
-     font-weight: bold;
-     
-  }
+#pokemonIconModal:hover {
+    height: 80vh;
+}
 
-  .black {
-      height: 12px !important;
-      background-color: transparent!important;
-      color: white !important;
-  }
+#modal-box {
+    position: absolute;
+    top: 0;
+    font-size: 100px;
+    font-weight: bold;
+}
 
-  .progress {
-      margin-top: 12px;
-      margin-bottom: 12px;
-  }
+.black {
+    height: 12px !important;
+    background-color: transparent!important;
+    color: white !important;
+}
 
-  .info-box{
+.progress {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+#info-box {
     position: absolute !important;
     bottom: 0px;
     right: 20px;
     width: 400px !important;
-   height: 100% !important;
-   background-color: rgba(141, 72, 23, 0.2);
-  }
+    height: 100% !important;
+    background-color: rgba(141, 72, 23, 0.2);
+}
 
-  #info-header {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    
-  }
+#info-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
-  .background {
-      background-color: rgb(54, 54, 54) !important;
-  }
+.background {
+    background-color: rgb(54, 54, 54) !important;
+}
