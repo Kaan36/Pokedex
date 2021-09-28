@@ -15,25 +15,33 @@ let valuex;
 let valuey;
 let limit = 21;
 let offset = 1;
-let scrollSet = 0;
-let setValue = 500;
 
-window.onscroll = function () { myFunction() };
+let scrolling = false;
 
-function myFunction() {
-    scrollSet = setValue;
-    if (limit < 121) {
-        if (scrollY > scrollSet) {
-            limit += 20;
-            offset += 20;
-            console.log('scrollY-limit:', limit)
-            loadPokemon();
-            setValue += 500;
-        }
-    }
+window.onscroll = () => {
+    scrolling = true;
 };
 
+setInterval(() => {
+    if (scrolling) {
+        scrolling = false;
+
+        if (limit < 141) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+
+                limit += 20;
+                offset += 20;
+                loadPokemon();
+                console.log('onscroll limit:', limit);
+                console.log('onscroll offset:', offset);
+            }
+            // place the scroll handling logic here
+        }
+    }
+}, 300);
+
 async function loadPokemon() {
+
     for (let i = offset; i < limit; i++) {
         let url = `https://pokeapi.co/api/v2/pokemon/${i}/?offset=${offset}&limit=${limit}`;
         let response = await fetch(url);
@@ -43,25 +51,67 @@ async function loadPokemon() {
     renderPokemonInfo()
 };
 
-async function renderPokemonInfo() {
-    await loadPokemon;
+function filterPosts() {
+    let search = document.getElementById('search').value;
+    search = search.toLowerCase();
+    console.log(search);
 
-    for (let i = offset; i < allPokemons.length; i++) {
+    let renderSearch = document.getElementById('pokemonCards');
+    renderSearch.innerHTML = '';
+
+    for (let i = 0; i < allPokemons.length; i++) {
+        if (allPokemons[i]['name'].includes(search)) {
+
+            renderSearch.innerHTML += `
+    
+    <div id="pokemonCard${i}" class="card card-style" style="width: 18rem;" onclick="toggleCardBody(${i})">
+    <div class="pokemonID" id="pokemonID${i}"></div>
+    <img id="pokemonIcon${i}" src="" class="card-img-top img-style">
+ 
+    <div id="card-body${i}" class="card-body card-body-style d-none">
+       
+        <div class="types">
+            <div class="card style-types-box bg-success">
+                <div id="type-${i}" class="card-body style-types">
+                    u.a.
+                </div>
+            </div>
+
+            <div class="card style-types-box bg-secondary ">
+                <div id="type-x${i}" class="card-body style-types">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="information">
+            <div class="card-body information-box">
+                <span id="weight${i}"></span>
+                Weight
+            </div>
+            <div class="card-body information-box">
+                <span id="height${i}"></span>
+                Height
+            </div>
+        </div>
+    `;
+        }
+    }
+
+};
+
+async function renderPokemonInfo() {
+
+    let offsetValue = offset - 1;
+
+    for (let i = offsetValue; i < allPokemons.length; i++) {
         renderPokemonCards(i);
         let pokemonIcon = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
         document.getElementById('pokemonIcon' + i).src = pokemonIcon;
 
-        let pokemonName = allPokemons[i]['name'];
-        document.getElementById('pokemonName' + i).innerHTML = pokemonName;
-
-        let pokemonHeight = allPokemons[i]['height'];
-        document.getElementById('height' + i).innerHTML = pokemonHeight;
-
-        let pokemonWeight = allPokemons[i]['weight'];
-        document.getElementById('weight' + i).innerHTML = pokemonWeight + ' lbs';
-
         let pokemonID = allPokemons[i]['id'];
         document.getElementById('pokemonID' + i).innerHTML = '#' + pokemonID + `
+        <h5 class="card-title">${allPokemons[i]['name']}</h5>
         <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showPokemonModal(${i})" >
       view
     </button>
@@ -69,52 +119,25 @@ async function renderPokemonInfo() {
 
         loadStats(i)
         renderPokemonTypes(i);
-
     }
 
 };
 
 async function renderPokemonTypes(i) {
-    await loadPokemon;
     pokemonType1 = allPokemons[i]['types'][0]['type']['name'];
-
     if (pokemonType1 == pokemonElements[0][pokemonType1]) {
-        document.getElementById('type-' + i).parentNode.classList.add(pokemonType1);
         document.getElementById('pokemonCard' + i).classList.add(pokemonType1);
-        document.getElementById('type-' + i).innerHTML = pokemonType1;
     }
-    if (allPokemons[i]['types'].length > 1) {
-        pokemonType2 = allPokemons[i]['types'][1]['type']['name'];
-        document.getElementById('type-x' + i).parentNode.classList.add(pokemonType2);
-        document.getElementById('type-x' + i).innerHTML = pokemonType2;
-    } else {
-        document.getElementById('type-x' + i).innerHTML = "u.a.";
-        document.getElementById('type-x' + i).parentNode.classList.add(pokemonType1);
-        document.getElementById('type-x' + i).innerHTML = pokemonType1;
-    }
+
 
 };
 
 async function loadStats(i) {
-    await loadPokemon;
     for (let j = 0; j < allPokemons[i]['stats'].length; j++) {
-
-        document.getElementById('hp' + i).style.width = allPokemons[i]['stats'][0]['base_stat'] + "%";
-        document.getElementById('hp' + i).innerHTML = `${allPokemons[i]['stats'][0]['base_stat']}/100 `;
-        document.getElementById('attack' + i).style.width = allPokemons[i]['stats'][1]['base_stat'] + "%";
-        document.getElementById('attack' + i).innerHTML = `${allPokemons[i]['stats'][1]['base_stat']}/100 `;
-        document.getElementById('defense' + i).style.width = allPokemons[i]['stats'][2]['base_stat'] + "%";
-        document.getElementById('defense' + i).innerHTML = `${allPokemons[i]['stats'][2]['base_stat']}/100 `;
-        document.getElementById('speed' + i).style.width = allPokemons[i]['stats'][3]['base_stat'] + "%";
-        document.getElementById('speed' + i).innerHTML = `${allPokemons[i]['stats'][3]['base_stat']}/100 `;
-        document.getElementById('special-attack' + i).style.width = allPokemons[i]['stats'][4]['base_stat'] + "%";
-        document.getElementById('special-attack' + i).innerHTML = `${allPokemons[i]['stats'][4]['base_stat']}/100 `;
-
         xValue = allPokemons[i]['stats'][j]['base_stat'];
         yValue = allPokemons[i]['stats'][j]['stat']['name'];
         xdataValue.push(xValue);
         ydataValue.push(yValue);
-
     }
     valuex = xdataValue.splice(0, 6);
     valuey = ydataValue.splice(0, 6);
@@ -130,11 +153,9 @@ function renderPokemonCards(i) {
         <div id="pokemonCard${i}" class="card card-style" style="width: 18rem;" onclick="toggleCardBody(${i})">
         <div class="pokemonID" id="pokemonID${i}"></div>
         <img id="pokemonIcon${i}" src="" class="card-img-top img-style">
-        
-        <div id="card-body${i}" class="card-body card-body-style">
-            <div class="center">
-                <h5 class="card-title" id="pokemonName${i}">Card title</h5>
-            </div>
+     
+        <div id="card-body${i}" class="card-body card-body-style d-none">
+           
             <div class="types">
                 <div class="card style-types-box bg-success">
                     <div id="type-${i}" class="card-body style-types">
@@ -159,62 +180,100 @@ function renderPokemonCards(i) {
                     Height
                 </div>
             </div>
-
-            <div class="chartBox">   
-            <span>hp</span>  
-            <div  class="progress bg-light">
-            <div id="hp${i}" class="progress-bar bg-danger" role="progressbar" style="width: 0%"  aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-          <div class="progress bg-light">
-            <div id="attack${i}" class="progress-bar bg-warning" role="progressbar" style="width: 0%"  aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-          <div class="progress bg-light">
-            <div id="defense${i}" class="progress-bar bg-primary" role="progressbar" style="width: 0%"  aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-          <div class="progress bg-light">
-            <div id="speed${i}" class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-            </div>
-            <div class="progress bg-light">
-            <div  id="special-attack${i}" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-            </div>
-        </div>
-        </div>
-
         `;
 
 };
 
-function toggleCardBody(i) {
+async function toggleCardBody(i) {
+    await loadPokemon;
+    await renderPokemonCards;
+
+    document.getElementById('pokemonID' + i).classList.remove(pokemonType1);
+    document.getElementById('pokemonIcon' + i).classList.remove(pokemonType1);
+    document.getElementById('type-').parentNode.classList.remove(pokemonType1);
+    document.getElementById('image-window').classList.remove(pokemonType1);
 
 
-    var x = document.getElementById("card-body" + i);
+    let windowBox = document.getElementById('window');
+    windowBox.classList.remove('d-none');
+    document.getElementById('card-window').classList.add('bg-selfblack');
+
+    let pokemonID = allPokemons[i]['id'];
+    document.getElementById('pokemonID').innerHTML = '#' + pokemonID + `
+    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showPokemonModal(${i})" >
+  view
+</button>
+    `;
+
+    let pokemonWindowIcon = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
+    document.getElementById('image-window').src = pokemonWindowIcon;
     pokemonType1 = allPokemons[i]['types'][0]['type']['name'];
+    document.getElementById('pokemonID' + i).classList.add(pokemonType1);
+    document.getElementById('pokemonIcon' + i).classList.add(pokemonType1);
 
-    if (x.style.display === "none") {
-        x.style.display = "block";
-        document.getElementById('pokemonCard' + i).classList.add('background');
-
-        document.getElementById('pokemonID' + i).classList.add(pokemonType1);
-        document.getElementById('pokemonIcon' + i).classList.add(pokemonType1);
-
-    } else {
-        x.style.display = "none";
-        document.getElementById('pokemonCard' + i).classList.remove('background');
-
+    if (pokemonType1 == pokemonElements[0][pokemonType1]) {
+        document.getElementById('type-').parentNode.classList.add(pokemonType1);
+        document.getElementById('image-window').classList.add(pokemonType1);
+        document.getElementById('type-').innerHTML = pokemonType1;
     }
+    if (allPokemons[i]['types'].length > 1) {
+        pokemonType2 = allPokemons[i]['types'][1]['type']['name'];
+        document.getElementById('type-x').parentNode.classList.add(pokemonType2);
+        document.getElementById('type-x').innerHTML = pokemonType2;
+    } else {
+        document.getElementById('type-x').innerHTML = "u.a.";
+        document.getElementById('type-x').parentNode.classList.add(pokemonType1);
+        document.getElementById('type-x').innerHTML = pokemonType1;
+    }
+
+   
+    document.getElementById('windowPokemonName').innerHTML = allPokemons[i]['name'];
+    document.getElementById('height').innerHTML = allPokemons[i]['height'];
+    document.getElementById('weight').innerHTML = allPokemons[i]['weight'] + ' lbs';
+
+
+    document.getElementById('hp').style.width = allPokemons[i]['stats'][0]['base_stat'] + "%";
+    document.getElementById('hp').innerHTML = `${allPokemons[i]['stats'][0]['base_stat']}/100 `;
+    document.getElementById('attack').style.width = allPokemons[i]['stats'][1]['base_stat'] + "%";
+    document.getElementById('attack').innerHTML = `${allPokemons[i]['stats'][1]['base_stat']}/100 `;
+    document.getElementById('defense').style.width = allPokemons[i]['stats'][2]['base_stat'] + "%";
+    document.getElementById('defense').innerHTML = `${allPokemons[i]['stats'][2]['base_stat']}/100 `;
+    document.getElementById('speed').style.width = allPokemons[i]['stats'][3]['base_stat'] + "%";
+    document.getElementById('speed').innerHTML = `${allPokemons[i]['stats'][3]['base_stat']}/100 `;
+    document.getElementById('special-attack').style.width = allPokemons[i]['stats'][4]['base_stat'] + "%";
+    document.getElementById('special-attack').innerHTML = `${allPokemons[i]['stats'][4]['base_stat']}/100 `;
+
+
+    for (let j = 0; j < allPokemons[i]['types'].length; j++) {
+        document.getElementById('types') += `<div class="${allPokemons[i]['types'][j]['type']['name']}"></div>`
+    }
+
 };
+
+function closeWindow() {
+    document.getElementById('window').classList.add('d-none');
+}
 
 async function showPokemonModal(i) {
     await loadPokemon;
     updateChart(i);
 
-    let pokemonName = allPokemons[i]['name'];
-    document.getElementById('info-header').innerHTML = `${pokemonName}`;
-
     let pokemonIcon = allPokemons[i]['sprites']['other']['official-artwork']['front_default'];
     document.getElementById('pokemonIconModal').src = pokemonIcon;
+
+    let pokemonIcon2 = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
+    document.getElementById('secondIcon').src = pokemonIcon2;
+
+    let pokemonName = allPokemons[i]['name'];
+    document.getElementById('info-header').innerHTML = `${pokemonName}`;
+    let pokemonHeight = allPokemons[i]['height'];
+    document.getElementById('info-height').innerHTML = `weight: ${pokemonHeight}
+    
+    `;
+    let pokemonWeight = allPokemons[i]['weight'];
+    document.getElementById('info-weight').innerHTML = `weight: ${pokemonWeight}
+    lbs
+    `;
 }
 
 
@@ -229,7 +288,7 @@ var myChart = new Chart(ctx, {
             label: '# of Votes',
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
-                'rgba(211, 0, 0, 0.2)',
+                'rgba(211, 0, 0, 0.4)',
                 'rgba(211, 0, 0, 0.2)',
                 'rgba(0, 17, 211, 0.2)',
                 'rgba(211, 179, 0, 0.2)',
@@ -238,7 +297,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 99, 132, 0.2)',
             ],
             borderColor: [
-                'rgba(0, 0, 0, 0.2)',
+                'rgba(211, 0, 0, 0.4)',
                 'rgba(211, 0, 0, 0.6)',
                 'rgba(0, 17, 211, 0.6)',
                 'rgba(211, 179, 0, 0.6)',
@@ -252,7 +311,7 @@ var myChart = new Chart(ctx, {
         elements: {
             point: {
 
-                radius: 20,
+                radius: 10,
             }
 
         },

@@ -1,6 +1,28 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 1rem;
     color: white !important;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+    margin-bottom: 12px;
+    width: 100%;
+    height: 50px;
+}
+
+.inputField {
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.6);
 }
 
 .pokemonID {
@@ -12,10 +34,37 @@ body {
     margin: -1px;
 }
 
+.window-pokemonID {
+    display: flex;
+    justify-content: space-between;
+    width: 101%;
+    border-radius: 24px 24px 0px 0px;
+    padding: 12px;
+    margin: -1px;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.td-width {
+    width: 20%;
+}
+
 .img-style {
     border-radius: 0px 0px 24px 24px !important;
     height: 150px !important;
     width: 101% !important;
+}
+
+.window-img-style {
+    border-radius: 24px 24px 24px 24px !important;
+    height: 250px !important;
+    width: 100% !important;
+}
+
+.window-body {
+    width: 100%;
 }
 
 .types {
@@ -53,11 +102,15 @@ body {
     align-items: center;
     flex-direction: column;
     padding-bottom: 0 !important;
+    font-size: 12px;
 }
 
-.card-body-style {
-    padding: 0 !important;
-    display: none;
+#height {
+    font-size: 22px;
+}
+
+#weight {
+    font-size: 22px;
 }
 
 .card-style {
@@ -148,16 +201,10 @@ body {
     background-color: #F469A9 !important;
 }
 
-#pokemonID {
-    position: absolute;
-    top: 15px;
-    right: 40px;
-    font-weight: bold;
-}
-
-#pokemonCards {
+.pokemonCards {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .modal-style {
@@ -172,11 +219,18 @@ body {
     position: relative !important;
 }
 
-#pokemonIconModal {
+#modal-box {
     position: absolute;
     bottom: 0;
-    left: 400px;
-    z-index: 10;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 70% !important;
+    height: 100% !important;
+}
+
+#pokemonIconModal {
     height: 50vh;
     transition: all 1s ease-in-out;
 }
@@ -185,11 +239,15 @@ body {
     height: 80vh;
 }
 
-#modal-box {
-    position: absolute;
-    top: 0;
-    font-size: 100px;
+#info-body {
     font-weight: bold;
+    font-size: 24px;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .black {
@@ -218,6 +276,31 @@ body {
     width: 100%;
 }
 
-.background {
+.bg-selfblack {
     background-color: rgb(54, 54, 54) !important;
+}
+
+.window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+}
+
+#secondIcon {
+    height: 100px;
+    margin-bottom: 12px;
+}
+
+@media(max-width: 1200px) {
+    .card-style {
+        min-width: 19rem !important;
+    }
 }
