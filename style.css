@@ -230,14 +230,13 @@ body {
     height: 100% !important;
 }
 
-#pokemonIconModal {
-    height: 50vh;
-    transition: all 1s ease-in-out;
+
+.pokemonIconModal {
+    height: 40vh;
+    opacity: 1;
+    transition: all 2s ease-in-out;
 }
 
-#pokemonIconModal:hover {
-    height: 80vh;
-}
 
 #info-body {
     font-weight: bold;
