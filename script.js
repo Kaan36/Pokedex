@@ -36,7 +36,7 @@ setInterval(() => {
             }
         }
     }
-}, 300);
+}, 500);
 //loading JSON-Array from pokeapi
 async function loadPokemon() {
     for (let i = offset; i < limit; i++) {
@@ -233,13 +233,14 @@ async function showPokemonModal(i) {
 
 function loadModalImages(i) {
     document.getElementById('pokemonIconModal').src = './images/pokeball.png';
+    document.getElementById('pokemonIconModal').classList.add('swiggle');
     setTimeout(function () {
         document.getElementById('pokemonIconModal').src = allPokemons[i]['sprites']['other']['official-artwork']['front_default'];
-    }, 2000)
+    }, 1500)
     document.getElementById('secondIcon').src = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
     setTimeout(function () {
-        document.getElementById('pokemonIconModal').style = 'height: 80vh; opacity: 1';
-    }, 2000)
+        document.getElementById('pokemonIconModal').style = 'height: 100vh; opacity: 1';
+    }, 1500)
 
 };
 
@@ -247,6 +248,14 @@ function loadModalInfos(i) {
     document.getElementById('info-header').innerHTML = `${allPokemons[i]['name']}`;
     document.getElementById('info-height').innerHTML = `height: ${allPokemons[i]['height']}`;
     document.getElementById('info-weight').innerHTML = `weight: ${allPokemons[i]['weight']}lbs`;
+    document.getElementById('info-type1').innerHTML = `types: ${allPokemons[i]['types'][0]['type']['name']}`;
+    if (allPokemons[i]['types'].length > 1) {
+        document.getElementById('info-type2').innerHTML = `types: ${allPokemons[i]['types'][1]['type']['name']}`;
+    }
+    document.getElementById('info-abilitie1').innerHTML = `abilitie: ${allPokemons[i]['abilities'][0]['ability']['name']}`;
+    if (allPokemons[i]['types'].length > 1) {
+        document.getElementById('info-abilitie2').innerHTML = `abilitie: ${allPokemons[i]['abilities'][1]['ability']['name']}`;
+    }
 };
 
 function closeModal() {

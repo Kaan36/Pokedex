@@ -230,16 +230,38 @@ body {
     height: 100% !important;
 }
 
-
 .pokemonIconModal {
     height: 40vh;
     opacity: 1;
-    transition: all 2s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
+.swiggle {
+    animation: swiggle 500ms forwards ease-in-out 500ms;
+}
+
+@keyframes swiggle {
+    0% {
+        transform: translate(0, 0);
+    }
+    15% {
+        transform: translate(1rem, 0);
+    }
+    35% {
+        transform: translate(-1rem, 0);
+    }
+    55% {
+        transform: translate(1rem, 0);
+    }
+    80% {
+        transform: translate(-1rem, 0);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
 
 #info-body {
-    font-weight: bold;
     font-size: 24px;
 }
 
@@ -247,6 +269,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: rgba(255, 255, 255, 0.466);
 }
 
 .black {

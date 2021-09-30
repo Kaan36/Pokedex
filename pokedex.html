@@ -18,7 +18,7 @@
 
 <body onload="loadPokemon()">
     <div class="header" id="header"><input id="search" class="inputField" type="text" placeholder="Suchen"
-            onkeydown="filterPosts()"></div>
+            onkeyup="filterPosts()"></div>
     <div id="pokemonCards" class="pokemonCards"></div>
 
     <!-- Modal -->
@@ -44,6 +44,10 @@
                         <div id="info-body">
                             <div id="info-height"></div>
                             <div id="info-weight"></div>
+                            <div id="info-type1"></div>
+                            <div id="info-type2"></div>
+                            <div id="info-abilitie1"></div>
+                            <div id="info-abilitie2"></div>
                         </div>
                         <canvas id="myChart" style="width: 400px; height: 400px;"></canvas>
                     </div>
@@ -53,7 +57,7 @@
     </div>
 
     <div id="window" class="window d-none">
-        <div id="card-window" class="card card-style h-100 d-inline-block w-25 p-0" style="width: 18rem;"
+        <div id="card-window" class="card card-style d-inline-block p-0" style="width: 23rem;"
             onclick="closeWindow()">
             <div class="window-pokemonID absolute" id="pokemonID"></div>
             <img id="image-window" src="" class="card-img-top window-img-style">
