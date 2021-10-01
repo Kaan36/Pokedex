@@ -12,7 +12,7 @@ let xValue;
 let yValue;
 let valuex;
 let valuey;
-let limit = 21;
+let limit = 32;
 let offset = 1;
 let pokemonType1;
 
@@ -26,10 +26,10 @@ window.onscroll = () => {
 setInterval(() => {
     if (scrolling) {
         scrolling = false;
-        if (limit < 201) {
+        if (limit < 202) {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                limit += 20;
-                offset += 20;
+                limit += 32;
+                offset += 32;
                 loadPokemon();
                 console.log('onscroll limit:', limit);
                 console.log('onscroll offset:', offset);
@@ -102,11 +102,8 @@ async function renderPokemonInfo() {
 };
 
 function pokemonInfo(i) {
-    document.getElementById('pokemonIcon' + i).src = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
-    document.getElementById('pokemonID' + i).innerHTML = '#' + allPokemons[i]['id'] + `
-    <h5 class="card-title">${allPokemons[i]['name']}</h5>
-    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showPokemonModal(${i})" >view</button>
-    `;
+    document.getElementById('pokemonIcon' + i).src = allPokemons[i]['sprites']['other']['official-artwork']['front_default'];
+
 }
 //generate the types from the api and color the card
 async function renderPokemonTypes(i) {
@@ -133,9 +130,10 @@ function pushStats(xdataValue, ydataValue) {
 
 function renderPokemonCards(i) {
     document.getElementById('pokemonCards').innerHTML += `
-        <div id="pokemonCard${i}" class="card card-style" style="width: 18rem;" onclick="toggleCard(${i})">
+        <div id="pokemonCard${i}" class="card card-style" style="width: 14rem;" onclick="toggleCard(${i})">
         <div class="pokemonID" id="pokemonID${i}"></div>
         <img id="pokemonIcon${i}" src="" class="card-img-top img-style">
+        <h5 class="card-title">${allPokemons[i]['name']}</h5>
         <div id="card-body${i}" class="card-body card-body-style d-none">
             <div class="types">
                 <div class="card style-types-box bg-success">
@@ -195,7 +193,7 @@ function loadPokeTypes(pokemonType1, i) {
 
 function loadtoggleCard(pokemonType1, i) {
     document.getElementById('card-window').classList.add('bg-selfblack');
-    document.getElementById('image-window').src = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
+    document.getElementById('image-window').src = allPokemons[i]['sprites']['other']['official-artwork']['front_default'];
     document.getElementById('pokemonID' + i).classList.add(pokemonType1);
     document.getElementById('pokemonIcon' + i).classList.add(pokemonType1);
     document.getElementById('pokemonID').innerHTML = '#' + allPokemons[i]['id'] + `
@@ -236,11 +234,9 @@ function loadModalImages(i) {
     document.getElementById('pokemonIconModal').classList.add('swiggle');
     setTimeout(function () {
         document.getElementById('pokemonIconModal').src = allPokemons[i]['sprites']['other']['official-artwork']['front_default'];
-    }, 1500)
-    document.getElementById('secondIcon').src = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
-    setTimeout(function () {
         document.getElementById('pokemonIconModal').style = 'height: 100vh; opacity: 1';
     }, 1500)
+    document.getElementById('secondIcon').src = allPokemons[i]['sprites']['other']['dream_world']['front_default'];
 
 };
 

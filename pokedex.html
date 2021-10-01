@@ -17,8 +17,11 @@
 </head>
 
 <body onload="loadPokemon()">
-    <div class="header" id="header"><input id="search" class="inputField" type="text" placeholder="Suchen"
-            onkeyup="filterPosts()"></div>
+    <div class="header" id="header">
+        <img src="./images/pokeball.png" style="width: 140px;">
+        <img id="headerImage" src="./images/pokemon.png" style="width: 300px;">
+        <input id="search" class="inputField" type="text" placeholder="Search Pokemon" onkeyup="filterPosts()">
+    </div>
     <div id="pokemonCards" class="pokemonCards"></div>
 
     <!-- Modal -->
@@ -27,8 +30,8 @@
             <div class="modal-content">
                 <div class="modal-header black">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title </h5>
-                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"
-                        aria-label="Close" onclick="closeModal()"></button>
+                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal()"></button>
                 </div>
                 <div id="modal-body" class="modal-body modal-style">
                     <video autoplay muted loop id="myVideo">
@@ -57,8 +60,7 @@
     </div>
 
     <div id="window" class="window d-none">
-        <div id="card-window" class="card card-style d-inline-block p-0" style="width: 23rem;"
-            onclick="closeWindow()">
+        <div id="card-window" class="card card-style d-inline-block p-0" style="width: 23rem;" onclick="closeWindow()">
             <div class="window-pokemonID absolute" id="pokemonID"></div>
             <img id="image-window" src="" class="card-img-top window-img-style">
             <div id="card-body" class="card-body window-body card-body-style">
